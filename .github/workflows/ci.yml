@@ -1,0 +1,44 @@
+name: ci.yml
+on:
+  push:
+   branches:
+    - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Ставим Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Ставим зависимости и собираем Vite,
+      # папка корневая
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Vite app
+        run: npm run build
+
+
+      # 4. Настраиваем AWS-креды
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # 5. Заливаем получившийся dist в S3
+      - name: Sync build to S3
+        run: |
+          aws s3 sync ./dist s3://front-buil-bucket --delete
