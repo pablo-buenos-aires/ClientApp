@@ -2,6 +2,7 @@
 
 .vscode/
 .idea/
+.github/
 Thumbs.db
 # dependencies
 
