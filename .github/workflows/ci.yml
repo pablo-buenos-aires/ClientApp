@@ -1,4 +1,7 @@
 name: ci.yml
+env:
+  VITE_GITHUB_ACTIONS: "true"
+
 on:
   push:
    branches:
