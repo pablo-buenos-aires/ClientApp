@@ -231,7 +231,7 @@ function IndexPage() {
                     <div className="search-bar">
                         <input
                             type="text"
-                            placeholder="Поиск по имени..."
+                            placeholder="Поиск по имени1..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}

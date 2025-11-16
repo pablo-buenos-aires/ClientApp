@@ -13,7 +13,7 @@ const App: React.FC = () => {
                 auth.signinRedirect({
                     extraQueryParams: { screen_hint: "login" },
                 });
-            }, 100);
+            }, 300);
         }
     }, [auth]);
 
