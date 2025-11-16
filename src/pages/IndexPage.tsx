@@ -35,7 +35,7 @@ function IndexPage() {
     const signOut = async () => {
         const clientId = "1dthdfdnlojrvd2c56663dvo86";
         const cognitoDomain = "https://sa-east-1abyvmc2px.auth.sa-east-1.amazoncognito.com";
-        const redirectUri = "https://localhost:44407";
+        const redirectUri = "d1i4ngjfyhcuut.cloudfront.net"  //"https://localhost:44407";
         // 1. Сначала делаем logout в Cognito
         const logoutUrl = `${cognitoDomain}/logout?client_id=${encodeURIComponent(clientId)}&logout_uri=${encodeURIComponent(redirectUri)}`;
 
