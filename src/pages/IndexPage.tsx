@@ -124,8 +124,7 @@ function IndexPage() {
             setLoading(false);
         }
     };
-
-    // Функция загрузки фото
+// Функция загрузки фото через presigned URL
     const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -147,23 +146,57 @@ function IndexPage() {
             setError('');
             setSuccessMessage('');
 
-            const formData = new FormData();
-            formData.append('photo', file);
-
-            const response = await fetch(`${API_BASE}/api/profile/photo`, {
+            // 1. Запрашиваем presigned URL у бэкенда
+            const presignedResponse = await fetch(`${API_BASE}/api/profile/presigned-url`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: formData
+                body: JSON.stringify({
+                    file_name: file.name,
+                    content_type: file.type
+                })
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to upload photo');
+            if (!presignedResponse.ok) {
+                const errorData = await presignedResponse.json();
+                throw new Error(errorData.error || 'Failed to get presigned URL');
             }
 
-            const data: UserProfile = await response.json();
+            const { upload_url, photo_url } = await presignedResponse.json();
+
+            // 2. Загружаем файл напрямую в S3 используя presigned URL
+            const uploadResponse = await fetch(upload_url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': file.type,
+                },
+                body: file
+            });
+
+            if (!uploadResponse.ok) {
+                throw new Error('Failed to upload photo to S3');
+            }
+
+            // 3. Сохраняем URL фото в профиле на бэкенде
+            const saveResponse = await fetch(`${API_BASE}/api/profile/photo`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${auth.user?.access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    photo_url: photo_url
+                })
+            });
+
+            if (!saveResponse.ok) {
+                const errorData = await saveResponse.json();
+                throw new Error(errorData.error || 'Failed to save photo URL');
+            }
+
+            const data: UserProfile = await saveResponse.json();
             setPhotoUrl(data.photo_url);
             setSuccessMessage('✅ Фото успешно загружено!');
 
