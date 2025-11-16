@@ -5,8 +5,8 @@ import App from './App'
 import {BrowserRouter} from "react-router-dom";
 
 import { AuthProvider, AuthProviderProps } from "react-oidc-context";
-//export const redirectUri = "https://d1i4ngjfyhcuut.cloudfront.net/auth/callback";
-export const redirectUri = "https://localhost:44407/auth/callback";
+export const redirectUri = "https://d1i4ngjfyhcuut.cloudfront.net/auth/callback";
+//export const redirectUri = "https://localhost:44407/auth/callback";
 
 //redirect_uri: "https://localhost:44407/auth/callback",
 const cognitoAuthConfig: AuthProviderProps = {
