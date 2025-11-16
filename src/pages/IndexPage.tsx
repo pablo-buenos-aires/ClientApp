@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { upVariants } from "../animations";
 import './IndexPage.scss';
+import { redirectUri} from "../main";
+
 
 // Типы для API
 interface UserProfile {
@@ -35,10 +37,10 @@ function IndexPage() {
     const signOut = async () => {
         const clientId = "1dthdfdnlojrvd2c56663dvo86";
         const cognitoDomain = "https://sa-east-1abyvmc2px.auth.sa-east-1.amazoncognito.com";
-        const redirectUri = "https://d1i4ngjfyhcuut.cloudfront.net"  //"https://localhost:44407";
-       // const redirectUri = "https://localhost:44407"
+       // const redirectUri = redi  //"https://localhost:44407";
+        const redirect_uri = redirectUri.split("/auth")[0];
         // 1. Сначала делаем logout в Cognito
-        const logoutUrl = `${cognitoDomain}/logout?client_id=${encodeURIComponent(clientId)}&logout_uri=${encodeURIComponent(redirectUri)}`;
+        const logoutUrl = `${cognitoDomain}/logout?client_id=${encodeURIComponent(clientId)}&logout_uri=${encodeURIComponent(redirect_uri)}`;
 
         // 2. Очищаем локальное состояние
         try {
