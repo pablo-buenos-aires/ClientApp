@@ -29,7 +29,7 @@ const cognitoAuthConfig: AuthProviderProps = {
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
-  throw new Error("Не найден элемент root в index.html");
+  throw new Error("Не найден элемент root в index.html -");
 }
 
 const root = ReactDOM.createRoot(rootElement);
