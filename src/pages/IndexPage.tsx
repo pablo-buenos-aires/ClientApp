@@ -34,6 +34,7 @@ function IndexPage() {
         }
     }, [auth.isAuthenticated, auth.user?.access_token]);
 
+    // - --- from amazon
     const signOut = async () => {
         const clientId = "1dthdfdnlojrvd2c56663dvo86";
         const cognitoDomain = "https://sa-east-1abyvmc2px.auth.sa-east-1.amazoncognito.com";
@@ -41,24 +42,13 @@ function IndexPage() {
         const redirect_uri = redirectUri.split("/auth")[0];
         // 1. Сначала делаем logout в Cognito
         const logoutUrl = `${cognitoDomain}/logout?client_id=${encodeURIComponent(clientId)}&logout_uri=${encodeURIComponent(redirect_uri)}`;
-
-        // 2. Очищаем локальное состояние
         try {
           await auth.removeUser();
         } catch (e) {
             console.warn("removeUser failed:", e);
         }
-      // 3. Редиректим на logout, который потом вернет на главную
+       // 3. Редиректим на logout, который потом вернет на главную
         window.location.href = logoutUrl;
-    };
-
-     // - --- from amazon
-    const signOutRedirect = () => {
-        const clientId = "1dthdfdnlojrvd2c56663dvo86";
-        const logoutUri = "https://localhost:44407";
-        const cognitoDomain = "https://sa-east-1abyvmc2px.auth.sa-east-1.amazoncognito.com";
-        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-
     };
 
 // Функция загрузки профиля
@@ -335,12 +325,7 @@ function IndexPage() {
                             <button className="btn-logout" onClick={signOut}>
                                 🚪 Signout
                             </button>
-                            <button className="btn-logout" onClick={signOutRedirect}>
-                                🚪 Sign out (Hosted UI)
-                            </button>
-                            <button className="btn-logout-local" onClick={() => auth.removeUser()}>
-                                🔓 auth.removeUser
-                            </button>
+
                         </div>
                     </div>
                 </div>
