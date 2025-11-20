@@ -25,6 +25,7 @@ function IndexPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+
     const API_BASE = 'http://localhost:8080';
 
     // Загрузка профиля при монтировании компонента
@@ -117,7 +118,7 @@ function IndexPage() {
             setLoading(false);
         }
     };
-// Функция загрузки фото через presigned URL
+/// Функция загрузки фото через presigned URL
     const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -172,9 +173,9 @@ function IndexPage() {
                 throw new Error('Failed to upload photo to S3');
             }
 
-            // 3. Сохраняем URL фото в профиле на бэкенде
-            const saveResponse = await fetch(`${API_BASE}/api/profile/photo`, {
-                method: 'PUT',
+            // подтверждаем загрузки для сохр. в базе
+            const saveResponse = await fetch(`${API_BASE}/api/profile/confirm-upload`, {
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
                     'Content-Type': 'application/json'
@@ -191,6 +192,8 @@ function IndexPage() {
 
             const data: UserProfile = await saveResponse.json();
             setPhotoUrl(data.photo_url);
+
+            setPhotoUrl(photo_url);
             setSuccessMessage('✅ Фото успешно загружено!');
 
             setTimeout(() => setSuccessMessage(''), 3000);
