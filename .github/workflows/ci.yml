@@ -2,48 +2,20 @@ name: ci.yml
 
 on:
   push:
-   branches:
-    - main
+    branches:
+      - main
+      # можешь добавить dev, если надо
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 1. Клонируем репозиторий
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. Ставим Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      # 3. Ставим зависимости и собираем Vite,
-      # папка корневая
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Vite app
-        run: npm run build
-
-
-      # 4. Настраиваем AWS-креды
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      # 5. Заливаем получившийся dist в S3
-      - name: Sync build to S3
-        run: |
-          aws s3 sync ./dist s3://front-buil-bucket --delete
-
-      - name: Invalidate CloudFront distributions
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"     
+  deploy:
+    uses: pablo-buenos-aires/frontend-workflows/.github/workflows/frontend-deploy-s3.yml@v2
+    with:
+      s3_bucket: front-buil-bucket
+      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
+      node_version: '20'
+      build_command: 'npm run build'             # если у тебя другая команда – поменяешь
+      build_dir: 'dist'                          # если Vite билдит в другое место – поменяешь
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}

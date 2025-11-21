@@ -91,7 +91,7 @@ function IndexPage() {
             setSuccessMessage('');
 
             const response = await fetch(`${API_BASE}/api/profile`, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
                     'Content-Type': 'application/json'
