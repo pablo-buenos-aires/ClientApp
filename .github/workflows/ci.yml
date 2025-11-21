@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    uses: pablo-buenos-aires/frontend-workflows/.github/workflows/frontend-deploy-s3.yml@v2
+    uses: pablo-buenos-aires/frontend-workflows/.github/workflows/front-deploy-s3.yml@v2
     with:
       s3_bucket: front-buil-bucket
       cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
