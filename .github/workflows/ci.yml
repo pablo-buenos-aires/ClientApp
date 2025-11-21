@@ -11,7 +11,7 @@ jobs:
     uses: pablo-buenos-aires/frontend-workflows/.github/workflows/frontend-deploy-s3.yml@v2
     with:
       s3_bucket: front-buil-bucket
-      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
+      cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
       node_version: '20'
       build_command: 'npm run build'             # если у тебя другая команда – поменяешь
       build_dir: 'dist'                          # если Vite билдит в другое место – поменяешь
