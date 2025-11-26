@@ -10,7 +10,7 @@ jobs:
   deploy:
     uses: pablo-buenos-aires/frontend-workflows/.github/workflows/front-deploy-s3.yml@v2
     with:
-      s3_bucket: front-buil-bucket
+      s3_bucket: front-build-bucket666
       cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
       node_version: '20'
       build_command: 'npm run build'             # если у тебя другая команда – поменяешь

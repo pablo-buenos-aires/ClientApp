@@ -26,7 +26,7 @@ function IndexPage() {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const API_BASE = 'http://localhost:8080';
+    const API_BASE = 'http://localhost:8080/api';
 
     // Загрузка профиля при монтировании компонента
     useEffect(() => {
@@ -58,7 +58,7 @@ function IndexPage() {
             setLoading(true);
             setError('');
 
-            const response = await fetch(`${API_BASE}/api/profile`, {
+            const response = await fetch(`${API_BASE}/profile`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
@@ -90,7 +90,7 @@ function IndexPage() {
             setError('');
             setSuccessMessage('');
 
-            const response = await fetch(`${API_BASE}/api/profile`, {
+            const response = await fetch(`${API_BASE}/profile`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
@@ -141,7 +141,7 @@ function IndexPage() {
             setSuccessMessage('');
 
             // 1. Запрашиваем presigned URL у бэкенда
-            const presignedResponse = await fetch(`${API_BASE}/api/profile/presigned-url`, {
+            const presignedResponse = await fetch(`${API_BASE}/profile/presigned-url`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
@@ -174,7 +174,7 @@ function IndexPage() {
             }
 
             // подтверждаем загрузки для сохр. в базе
-            const saveResponse = await fetch(`${API_BASE}/api/profile/confirm-upload`, {
+            const saveResponse = await fetch(`${API_BASE}/profile/confirm-upload`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.user?.access_token}`,
