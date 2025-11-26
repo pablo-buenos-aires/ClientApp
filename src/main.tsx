@@ -14,7 +14,7 @@ export const redirectUri =  getRedirectUri();
 //    import.meta.env.VITE_GITHUB_ACTIONS === "true"
 //        ? "https://d1i4ngjfyhcuut.cloudfront.net/auth/callback" : "https://localhost:44407/auth/callback";
 
-//redirect_uri: "https://localhost:44407/auth/callback",
+//redirect_uri: "https://localhost:44407/auth/callback ",
 const cognitoAuthConfig: AuthProviderProps = {
   authority: "https://cognito-idp.sa-east-1.amazonaws.com/sa-east-1_abyVMc2Px",
   client_id: "1dthdfdnlojrvd2c56663dvo86",
