@@ -13,8 +13,8 @@ jobs:
       s3_bucket: front-build-bucket666
       cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
       node_version: '20'
-      build_command: 'npm run build'             # если у тебя другая команда – поменяешь
-      build_dir: 'dist'                          # если Vite билдит в другое место – поменяешь
+      build_command: 'npm run build'             # если у тебя другая команда
+      build_dir: 'dist'                          # если Vite билдит в другое место
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }} # меняются немного переменных названия
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}

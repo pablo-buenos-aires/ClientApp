@@ -7,7 +7,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (!auth.isLoading && !auth.isAuthenticated && !auth.error) {
-            console.log("Not authenticated, redirecting to Cognito login...");
+            console.log("Not authenticated,  - redirecting to Cognito login...");
           // Небольшая задержка, чтобы избежать race condition
             setTimeout(() => {
                 auth.signinRedirect({
