@@ -26,7 +26,7 @@ function IndexPage() {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const API_BASE = 'backend-alb-635489014.sa-east-1.elb.amazonaws.com/api';
+    const API_BASE = 'http://backend-alb-635489014.sa-east-1.elb.amazonaws.com/api';
 
     // Загрузка профиля при монтировании компонента
     useEffect(() => {
