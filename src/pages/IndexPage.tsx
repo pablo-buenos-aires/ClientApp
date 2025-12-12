@@ -27,6 +27,23 @@ function IndexPage() {
     const [successMessage, setSuccessMessage] = useState('');
 
     const API_BASE = 'http://backend-alb-635489014.sa-east-1.elb.amazonaws.com/api';
+    // const API_BASE = 'http://localhost:8000/api';
+    
+    const networkErrorMessage = (
+        fallback: string,
+        context: string,
+        error: unknown,
+    ) => {
+        if (error instanceof TypeError) {
+            return `${context}. Возможные причины: блокировка смешанного контента при обращении к http с https-страницы, ошибки CORS или недоступность HTTPS на домене API.`;
+        }
+
+        if (error instanceof Error) {
+            return error.message || fallback;
+        }
+
+        return fallback;
+    };
 
     // Загрузка профиля при монтировании компонента
     useEffect(() => {
@@ -76,7 +93,8 @@ function IndexPage() {
             setPhotoUrl(data.photo_url);
         } catch (err) {
             console.error('Error loading profile:', err);
-            setError(err instanceof Error ? err.message : 'Failed to load profile');
+            //setError(err instanceof Error ? err.message : 'Failed to load profile');
+            setError(networkErrorMessage('Не удалось загрузить профиль', 'Ошибка сети при загрузке профиля', err));
         } finally {
             setLoading(false);
         }
