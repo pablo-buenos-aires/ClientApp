@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      # можешь добавить dev, если надо
+      # можешь доба вить dev, если надо
 
 jobs:
   deploy:
-    uses: pablo-buenos-aires/workflows/.github/workflows/front-deploy-s3.yml
+    uses: pablo-buenos-aires/workflows/.github/workflows/front-deploy-s3.yml@v2
     with:
       s3_bucket: front-build-bucket666
       cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}   # или '' если нет CF
