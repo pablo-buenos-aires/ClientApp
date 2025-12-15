@@ -35,7 +35,7 @@ function IndexPage() {
         error: unknown,
     ) => {
         if (error instanceof TypeError) {
-            return `${context}. Возможные причины: блокировка смешанного контента при обращении к http с https-страницы, ошибки CORS или недоступность HTTPS на домене API.`;
+            return `${context}. Возможные  причины: блокировка смешанного контента при обращении к http с https-страницы, ошибки CORS или недоступность HTTPS на домене API.`;
         }
 
         if (error instanceof Error) {
