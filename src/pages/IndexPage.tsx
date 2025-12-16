@@ -26,7 +26,7 @@ function IndexPage() {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const API_BASE = 'http://api.devopsba.com/api';
+    const API_BASE = 'https://api.devopsba.com/api';
     // const API_BASE = 'http://localhost:8000/api';
     
     const networkErrorMessage = (
