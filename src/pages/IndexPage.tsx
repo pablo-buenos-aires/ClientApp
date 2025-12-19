@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { upVariants } from "../animations";
 import './IndexPage.scss';
 import { redirectUri} from "../main";
+import UserListModal from "./UserListModal";
 
 
 // Типы для API
@@ -16,6 +17,20 @@ interface UserProfile {
     updated_at: string;
 }
 
+// Тип для моковых данных
+interface User {
+  id: string;
+  name: string;
+  bio: string;
+  photo_url: string;
+}
+
+const mockUsers: User[] = [
+    { id: '1', name: 'Алиса', bio: 'Люблю котиков и программирование', photo_url: 'https://i.pravatar.cc/150?u=a042581f4e29026704d' },
+    { id: '2', name: 'Борис', bio: 'Ищу вдохновение в путешествиях', photo_url: 'https://i.pravatar.cc/150?u=a042581f4e29026705d' },
+    { id: '3', name: 'Виктория', bio: 'Художник, дизайнер, визионер', photo_url: 'https://i.pravatar.cc/150?u=a042581f4e29026706d' },
+];
+
 function IndexPage() {
     const auth = useAuth();
     const [name, setName] = useState('');
@@ -25,6 +40,7 @@ function IndexPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const API_BASE = 'https://api.devopsba.com/api';
     // const API_BASE = 'http://localhost:8000/api';
@@ -226,6 +242,7 @@ function IndexPage() {
     const handleSearch = () => {
         console.log('Searching for:', searchQuery);
         // Здесь будет логика поиска
+        setIsModalOpen(true);
     };
 
 
@@ -355,6 +372,12 @@ function IndexPage() {
                <div style={{ fontSize: '10px', overflow: 'auto', padding: '10px' }}>
                         <pre>Access Token: {auth.user?.access_token}</pre>
                </div>
+            
+            <UserListModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                users={mockUsers}
+            />
 
         </motion.div>
     );
