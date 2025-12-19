@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     branches:
-      - main
+      - main 
       # можешь доба вить dev, если надо
 
 jobs:
@@ -18,8 +18,4 @@ jobs:
       node_version: '20'
       build_command: 'npm run build'             # если у тебя другая команда
       build_dir: 'dist'                          # если Vite билдит в другое место
-#    secrets:
-     
-#      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }} # меняются немного переменных названия
-#      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }} 
-#      AWS_REGION: ${{ secrets.AWS_REGION }}
+
