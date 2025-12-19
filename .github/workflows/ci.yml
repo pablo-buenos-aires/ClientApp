@@ -1,5 +1,8 @@
 name: ci.yml
- 
+
+permissions:
+  id-token: write   # нужно для OIDC → AWS STS
+
 on:
   push:
     branches:
